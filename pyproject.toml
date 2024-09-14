@@ -12,6 +12,10 @@ flask = "^3.0.3"
 peewee = "^3.17.6"
 
 
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.11.2"
+pytest = "^8.3.3"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
