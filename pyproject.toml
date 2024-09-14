@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "backend"
+version = "0.1.0"
+description = "Backend for MSConsultoria challenge about a logistics app"
+authors = ["matheus <matheusvictor870@gmail.com>"]
+license = "All rights reserved"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.11"
+flask = "^3.0.3"
+peewee = "^3.17.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
