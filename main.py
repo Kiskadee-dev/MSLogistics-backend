@@ -3,6 +3,7 @@ from os import getenv
 from dotenv import load_dotenv
 import views.mercadoria as mercadoria
 import views.usuario as usuario
+import views.generic as generic
 from database import Database
 
 load_dotenv()
@@ -21,7 +22,7 @@ def after_request(response):
     return response
 
 
-#app.add_url_rule("/", view_func=mercadoria.index)
+app.add_url_rule("/", view_func=generic.index)
 app.add_url_rule("/mercadoria/", view_func=mercadoria.get_list)
 app.add_url_rule("/mercadoria", view_func=mercadoria.create, methods=["POST"])
 app.add_url_rule("/mercadoria/<int:pk>", view_func=mercadoria.read, methods=["GET"])
