@@ -1,0 +1,16 @@
+services:
+  db:
+    image: mariadb:11.6.1-ubi-rc
+    env_file:
+    - .env
+    expose:
+    - 3000
+
+  backend:
+    build: .
+    ports:
+    - 5000:5000
+    env_file:
+    - .env
+    depends_on:
+    - db
