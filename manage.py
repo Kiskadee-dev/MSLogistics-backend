@@ -9,64 +9,118 @@ def create_tables():
 
     db = Database.get()
     with db:
-        db.create_tables([models.Usuario, models.Mercadoria, models.EntradaESaida])
+        db.create_tables(
+            [
+                models.Usuario,
+                models.Fabricante,
+                models.TipoMercadoria,
+                models.Operacao,
+                models.Mercadoria,
+                models.EntradaESaida,
+            ]
+        )
 
 
 def dados_de_teste():
     load_dotenv()
     Database.get().connect()
     try:
-        # Cria e insere admin
-        admin = models.Usuario(
-            nome=getenv("ADMIN_USER", "Admin"),
-            senha=getenv("ADMIN_PASSWORD", "Admin"),
-            email=getenv("ADMIN_EMAIL", "Admin@Admin.com"),
+        adm_name = getenv("ADMIN_USER", "Admin")
+        user_exists = (
+            len(models.Usuario.select().where(models.Usuario.nome == adm_name)) == 1
         )
-        admin.save()
+
+        if not user_exists:
+            # Cria e insere admin
+            admin = models.Usuario(
+                nome=adm_name,
+                senha=getenv("ADMIN_PASSWORD", "Admin"),
+                email=getenv("ADMIN_EMAIL", "Admin@Admin.com"),
+            )
+            admin.save()
+        admin = models.Usuario.get(models.Usuario.id == 1)
 
         # Cria um fabricante
-        fab = models.Fabricante(
-            nome="AgricultorXYZ", descricao="""Produtor de grãos""", criado_por=admin
+        fab_exists = (
+            len(
+                models.Fabricante.select().where(
+                    models.Fabricante.nome == "AgricultorXYZ"
+                )
+            )
+            == 1
         )
-        fab.save()
+        if not fab_exists:
+            fab = models.Fabricante(
+                nome="AgricultorXYZ",
+                descricao="""Produtor de grãos""",
+                criado_por=admin,
+            )
+            fab.save()
+        fab = models.Fabricante.get(models.Fabricante.nome == "AgricultorXYZ")
 
         # Cria tipos de operações de entrada e saída
-        models.Operacao(
-            nome="entrada",
-            descricao="""Produtos que entraram no armazém""",
-            criado_por=admin,
-        ).save()
-        models.Operacao(
-            nome="saida",
-            descricao="""Produtos que saíram do armazém""",
-            criado_por=admin,
-        ).save()
+
+        ops_entrada_exists = (
+            len(models.Operacao.select().where(models.Operacao.nome == "entrada")) == 1
+        )
+        if not ops_entrada_exists:
+            models.Operacao(
+                nome="entrada",
+                descricao="""Produtos que entraram no armazém""",
+                criado_por=admin,
+            ).save()
+
+        ops_saida_exists = (
+            len(models.Operacao.select().where(models.Operacao.nome == "saida")) == 1
+        )
+        if not ops_saida_exists:
+            models.Operacao(
+                nome="saida",
+                descricao="""Produtos que saíram do armazém""",
+                criado_por=admin,
+            ).save()
+
+        # Cria alguns tipos de produtos, imagino que seja algo genérico como alimento, eletrônico, etc...
+        tipos_produtos_existe = (
+            len(
+                models.TipoMercadoria.select().where(
+                    models.TipoMercadoria.nome == "Grão"
+                )
+            )
+            == 1
+        )
+        if not tipos_produtos_existe:
+            models.TipoMercadoria(nome="Grão", criado_por=admin).save()
+
+        tipo_mercadoria = models.TipoMercadoria.get(
+            models.TipoMercadoria.nome == "Grão"
+        )
 
         # Cria e salva alguns produtos
-        models.Mercadoria(
-            nome="Arroz",
-            descricao="""
-            O arroz é uma planta da família das gramíneas e gênero Oryza, que alimenta mais de metade da população humana do mundo. É a terceira maior cultura cerealífera do mundo, apenas ultrapassada pelas de milho e trigo.
-            """.replace(
-                "\n", ""
-            ).strip(),
-            criado_por=admin,
-        ).save()
+        produtos_existem = (
+            len(models.Mercadoria.select().where(models.Mercadoria.nome == "Arroz"))
+            == 1
+        )
 
-        models.Mercadoria(
-            nome="Feijão",
-            descricao="""
-            Proporciona nutrientes essenciais como proteínas, ferro, cálcio, vitaminas (principalmente do complexo B), carboidratos e fibras. 
-            """.replace(
-                "\n", ""
-            ).strip(),
-            criado_por=admin,
-        ).save()
+        if not produtos_existem:
+            models.Mercadoria(
+                nome="Arroz",
+                descricao="""
+                O arroz é uma planta da família das gramíneas e gênero Oryza, que alimenta mais de metade da população humana do mundo. É a terceira maior cultura cerealífera do mundo, apenas ultrapassada pelas de milho e trigo.
+                """.replace(
+                    "\n", ""
+                ).strip(),
+                numero_mercadoria=1234,
+                tipo=tipo_mercadoria,
+                fabricante=fab,
+                criado_por=admin,
+            ).save()
 
     finally:
         Database.get().close()
 
 
 if __name__ == "__main__":
+    db = Database.get()
     create_tables()
     dados_de_teste()

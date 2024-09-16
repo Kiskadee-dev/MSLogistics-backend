@@ -46,7 +46,7 @@ class Fabricante(BaseModel):
     criado_por = ForeignKeyField(Usuario, backref="fabricantes_usuario")
 
 
-class TiposMercadoria(BaseModel):
+class TipoMercadoria(BaseModel):
     nome = CharField(max_length=256, unique=True)
     criado_em = DateTimeField(default=datetime.now)
     criado_por = ForeignKeyField(Usuario, backref="tipos_mercadoria_usuario")
@@ -54,9 +54,9 @@ class TiposMercadoria(BaseModel):
 
 class Mercadoria(BaseModel):
     nome = CharField(max_length=256)
-    numero_registro = IntegerField(unique=True)
+    numero_registro = IntegerField(unique=True, null=None)
     fabricante = ForeignKeyField(Fabricante, backref="mercadorias_fabricante")
-    tipo = ForeignKeyField(TiposMercadoria, backref="mercadorias_tipo")
+    tipo = ForeignKeyField(TipoMercadoria, backref="mercadorias_tipo")
     descricao = TextField()
     criado_em = DateTimeField(default=datetime.now)
     criado_por = ForeignKeyField(Usuario, backref="mercadorias_usuario")

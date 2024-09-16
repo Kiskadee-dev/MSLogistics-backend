@@ -1,20 +1,13 @@
 from models import Fabricante, Usuario
 from flask import jsonify
 from database import Database
+from playhouse.shortcuts import model_to_dict
 
 
-def get_list():
-    fabs = [
-        {
-            "id": query.id,
-            "nome": query.nome,
-            "descricao": query.descricao,
-            "criado_em": query.criado_em,
-            "criado_por": {"id": query.criado_por.id, "nome": query.criado_por.nome},
-        }
-        for query in Fabricante.select()
-    ]
-    return jsonify(fabs)
+def fabricante_get_list():
+    return jsonify(
+        [model_to_dict(query, exclude=[Usuario.senha]) for query in Fabricante.select()]
+    )
 
 
 def create(nome: str, descricao: str):
