@@ -53,6 +53,7 @@ def test_mercadoria_presente():
 def test_usuario(client):
     response = client.get("/usuario/")
     data = json.loads(response.data)
+    assert response.status_code == 200
     assert len(data) > 0, "Possui dados"
     assert data[0]["nome"] == "Admin", "Usuário 0 é o admin"
 
@@ -63,3 +64,33 @@ def test_tipos_operacoes(client):
     assert len(data) > 1
     assert data[0]["nome"] == "entrada"
     assert data[1]["nome"] == "saída"
+
+
+# Fabricantes, precisa haver endpoints da CRUD
+def test_fabricantes_list(client):
+    response = client.get("/fabricante/")
+    assert response.status_code == 200
+
+
+def test_fabricantes_read(client):
+    response = client.get("/fabricante/1")
+    assert response.status_code == 200
+
+
+# Tipos de operações, precisa haver endpoint R
+def test_tipos_operacoes_list(client):
+    response = client.get("/operacao/tipos/")
+    assert response.status_code == 200
+
+
+# Entradas e saídas, CRUD
+def test_entrada_saida_list(client):
+    response = client.get("/operacao/")
+    assert response.status_code == 200
+
+
+def test_entrada_saida_read(client):
+    pytest.skip("Not implemented.")
+
+    response = client.get("/operacao/1")
+    assert response.status_code == 200

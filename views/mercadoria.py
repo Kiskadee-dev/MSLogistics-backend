@@ -1,8 +1,8 @@
 from flask import jsonify, request
 from models import Mercadoria, Usuario
 from playhouse.shortcuts import model_to_dict
-import serializer
-from peewee import IntegrityError
+from peewee import DoesNotExist
+from responses import Responses, Messages
 
 
 def mercadoria_get_list():
@@ -22,16 +22,21 @@ def mercadoria_create():
     Dict
         Returns status code
     """
-
-    mercadoria = serializer.mercadoria(request.form)
+    form = request.form
+    mercadoria = Mercadoria(
+        nome=form.get("nome"),
+        numero_registro=form.get("numero_registro"),
+        fabricante=form.get("fabricante"),
+        tipo=form.get("tipo"),
+        descricao=form.get("descricao"),
+        criado_por=1,
+    )
     mercadoria.save()
-
-
-    return jsonify({"msg": "Created."}), 200
+    return Responses.created()
 
 
 def mercadoria_read(pk: int):
-    """Gets info about an object
+    """Gets info about Mercadoria
 
     Parameters
     ----------
@@ -43,28 +48,63 @@ def mercadoria_read(pk: int):
     Dict
         Returns the info about the object
     """
-    # TODO: Retornar JSON do objeto
-    query = Mercadoria.get_or_none(Mercadoria.id == pk)
-    if query is None:
-        return jsonify({"msg": "not found"}), 404
+    try:
+        query = Mercadoria.get(Mercadoria.id == pk)
+    except DoesNotExist:
+        return Responses.not_found()
     return jsonify(model_to_dict(query, exclude=[Usuario.senha]))
 
 
 def mercadoria_update():
-    """Updates an object
+    """Updates Mercadoria object
 
     Parameters
     ----------
-
+    None
 
     Returns
     -------
     Dict
-        Returns the info about the object
+        Returns status code and update message
     """
-    # TODO: Retornar JSON do objeto
-    pk = request.form["pk"] if "pk" in request.form else None
-    return jsonify(request.form)
+
+    form = request.form
+    mercadoria_id = form.get("id")  # Assuming 'id' is passed to identify the object
+
+    if not mercadoria_id:
+        return Responses.bad_request(Messages.no_id)
+
+    # Try to get the Mercadoria object by ID
+    try:
+        mercadoria = Mercadoria.get(Mercadoria.id == mercadoria_id)
+    except DoesNotExist:
+        return Responses.not_found()
+
+    # Prepare the update data
+    update_data = {}
+    nome = form.get("nome")
+    numero_registro = form.get("numero_registro")
+    fabricante = form.get("fabricante")
+    tipo = form.get("tipo")
+    descricao = form.get("descricao")
+
+    if nome:
+        update_data["nome"] = nome
+    if numero_registro:
+        update_data["numero_registro"] = numero_registro
+    if fabricante:
+        update_data["fabricante"] = fabricante
+    if tipo:
+        update_data["tipo"] = tipo
+    if descricao:
+        update_data["descricao"] = descricao
+
+    # Perform the update if there are fields to update
+    if update_data:
+        Mercadoria.update(**update_data).where(Mercadoria.id == mercadoria_id).execute()
+        return Responses.ok()
+    else:
+        return Responses.bad_request(Messages.no_fields_to_update)
 
 
 def mercadoria_delete(pk: int):
@@ -79,5 +119,10 @@ def mercadoria_delete(pk: int):
     -------
     200 Ok or 404.
     """
-    # TODO: Retornar JSON do objeto
-    return jsonify({"pk": pk})
+    form = request.form
+    id = form.get("id")
+    if not id:
+        return Responses.bad_request(Messages.no_id)
+    mercadoria = Mercadoria.get(Mercadoria.id == id)
+    mercadoria.delete()
+    return Responses.ok(Messages.deleted)
