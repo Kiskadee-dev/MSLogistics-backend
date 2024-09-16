@@ -47,15 +47,15 @@ app.add_url_rule(
     "/mercadoria", view_func=mercadoria.mercadoria_create, methods=["POST"]
 )
 app.add_url_rule(
-    "/mercadoria/<int:pk>", view_func=mercadoria.mercadoria_read, methods=["GET"]
+    "/mercadoria/<int:id>", view_func=mercadoria.mercadoria_read, methods=["GET"]
 )
 app.add_url_rule(
-    "/mercadoria/<int:pk>",
+    "/mercadoria/<int:id>",
     view_func=mercadoria.mercadoria_update,
     methods=["PATCH"],
 )
 app.add_url_rule(
-    "/mercadoria/<int:pk>",
+    "/mercadoria/<int:id>",
     view_func=mercadoria.mercadoria_delete,
     methods=["DELETE"],
 )
@@ -71,13 +71,13 @@ app.add_url_rule(
     "/fabricante", view_func=fabricantes.fabricante_create, methods=["POST"]
 )
 app.add_url_rule(
-    "/fabricante/<int:pk>", view_func=fabricantes.fabricante_read, methods=["GET"]
+    "/fabricante/<int:id>", view_func=fabricantes.fabricante_read, methods=["GET"]
 )
 app.add_url_rule(
-    "/fabricante/<int:pk>", view_func=fabricantes.fabricante_update, methods=["PATCH"]
+    "/fabricante/<int:id>", view_func=fabricantes.fabricante_update, methods=["PATCH"]
 )
 app.add_url_rule(
-    "/fabricante/<int:pk>", view_func=fabricantes.fabricante_delete, methods=["POST"]
+    "/fabricante/<int:id>", view_func=fabricantes.fabricante_delete, methods=["POST"]
 )
 
 # Tipos de operações, R
@@ -97,17 +97,17 @@ app.add_url_rule(
     methods=["POST"],
 )
 app.add_url_rule(
-    "/operacao/<int:pk>",
+    "/operacao/<int:id>",
     view_func=entradas_e_saidas.entradas_e_saidas_read,
     methods=["GET"],
 )
 app.add_url_rule(
-    "/operacao/<int:pk>",
+    "/operacao/<int:id>",
     view_func=entradas_e_saidas.entradas_e_saidas_update,
     methods=["PATCH"],
 )
 app.add_url_rule(
-    "/operacao/<int:pk>",
+    "/operacao/<int:id>",
     view_func=entradas_e_saidas.entradas_e_saidas_delete,
     methods=["POST"],
 )
@@ -124,17 +124,17 @@ app.add_url_rule(
     methods=["POST"],
 )
 app.add_url_rule(
-    "/mercadoria/tipos/<int:pk>",
+    "/mercadoria/tipos/<int:id>",
     view_func=tipos_mercadoria.tipos_mercadoria_read,
     methods=["GET"],
 )
 app.add_url_rule(
-    "/mercadoria/tipos/<int:pk>",
+    "/mercadoria/tipos/<int:id>",
     view_func=tipos_mercadoria.tipos_mercadoria_update,
     methods=["PATCH"],
 )
 app.add_url_rule(
-    "/mercadoria/tipos/<int:pk>",
+    "/mercadoria/tipos/<int:id>",
     view_func=tipos_mercadoria.tipos_mercadoria_delete,
     methods=["DELETE"],
 )

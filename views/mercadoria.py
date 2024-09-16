@@ -35,21 +35,21 @@ def mercadoria_create():
     return Responses.created()
 
 
-def mercadoria_read(pk: int):
+def mercadoria_read():
     """Gets info about Mercadoria
 
     Parameters
     ----------
-    pk : int
-        Id of the object
 
     Returns
     -------
     Dict
         Returns the info about the object
     """
+    form = request.form
+    id = form.get("id")
     try:
-        query = Mercadoria.get(Mercadoria.id == pk)
+        query = Mercadoria.get(Mercadoria.id == id)
     except DoesNotExist:
         return Responses.not_found()
     return jsonify(model_to_dict(query, exclude=[Usuario.senha]))
@@ -107,14 +107,12 @@ def mercadoria_update():
         return Responses.bad_request(Messages.no_fields_to_update)
 
 
-def mercadoria_delete(pk: int):
+def mercadoria_delete():
     """Deletes an object
 
     Parameters
     ----------
-    pk : int
-        Id of the object
-
+    
     Returns
     -------
     200 Ok or 404.
