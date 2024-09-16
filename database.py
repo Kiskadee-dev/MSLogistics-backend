@@ -1,6 +1,7 @@
-from peewee import MySQLDatabase
-from typing import Optional, Callable
 from os import getenv
+from typing import Callable, Optional
+
+from peewee import MySQLDatabase
 
 
 class Database:

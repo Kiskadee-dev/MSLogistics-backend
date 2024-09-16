@@ -1,9 +1,11 @@
-from models import EntradaESaida, Usuario
-from flask import jsonify, request
-from playhouse.shortcuts import model_to_dict
 from datetime import datetime
+
+from flask import jsonify, request
 from peewee import DoesNotExist
-from responses import Responses, Messages
+from playhouse.shortcuts import model_to_dict
+
+from models import EntradaESaida, Usuario
+from responses import Messages, Responses
 
 
 def entradas_e_saidas_get_list():

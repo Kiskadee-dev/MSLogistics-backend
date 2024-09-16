@@ -1,15 +1,17 @@
-from flask import Flask, request, jsonify
 from os import getenv
+
 from dotenv import load_dotenv
-import views.mercadoria as mercadoria
-import views.usuario as usuario
-import views.generic as generic
+from flask import Flask, jsonify, request
+from peewee import IntegrityError
+
 import views.entradas_saidas as entradas_e_saidas
 import views.fabricantes as fabricantes
-import views.tipos_mercadoria as tipos_mercadoria
+import views.generic as generic
+import views.mercadoria as mercadoria
 import views.tipo_operacao as tipo_operacao
+import views.tipos_mercadoria as tipos_mercadoria
+import views.usuario as usuario
 from database import Database
-from peewee import IntegrityError
 
 load_dotenv()
 

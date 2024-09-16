@@ -1,7 +1,9 @@
+from os import getenv
+
+from dotenv import load_dotenv
+
 import models
 from database import Database
-from os import getenv
-from dotenv import load_dotenv
 
 
 def create_tables():
@@ -61,7 +63,12 @@ def dados_de_teste(testing=False):
         # Cria tipos de operações de entrada e saída
 
         ops_entrada_exists = (
-            len(models.TipoOperacao.select().where(models.TipoOperacao.nome == "entrada")) == 1
+            len(
+                models.TipoOperacao.select().where(
+                    models.TipoOperacao.nome == "entrada"
+                )
+            )
+            == 1
         )
         if not ops_entrada_exists:
             models.TipoOperacao(
@@ -71,7 +78,8 @@ def dados_de_teste(testing=False):
             ).save()
 
         ops_saida_exists = (
-            len(models.TipoOperacao.select().where(models.TipoOperacao.nome == "saida")) == 1
+            len(models.TipoOperacao.select().where(models.TipoOperacao.nome == "saida"))
+            == 1
         )
         if not ops_saida_exists:
             models.TipoOperacao(

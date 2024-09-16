@@ -1,8 +1,9 @@
 from flask import jsonify, request
-from models import Mercadoria, Usuario
-from playhouse.shortcuts import model_to_dict
 from peewee import DoesNotExist
-from responses import Responses, Messages
+from playhouse.shortcuts import model_to_dict
+
+from models import Mercadoria, Usuario
+from responses import Messages, Responses
 
 
 def mercadoria_get_list():
@@ -35,7 +36,7 @@ def mercadoria_create():
     return Responses.created()
 
 
-def mercadoria_read(id:int):
+def mercadoria_read(id: int):
     """Gets info about Mercadoria
 
     Parameters
@@ -55,7 +56,7 @@ def mercadoria_read(id:int):
     return jsonify(model_to_dict(query, exclude=[Usuario.senha]))
 
 
-def mercadoria_update(id:int):
+def mercadoria_update(id: int):
     """Updates Mercadoria object
 
     Parameters
@@ -107,7 +108,7 @@ def mercadoria_update(id:int):
         return Responses.bad_request(Messages.no_fields_to_update)
 
 
-def mercadoria_delete(id:int):
+def mercadoria_delete(id: int):
     """Deletes an object
 
     Parameters

@@ -1,5 +1,7 @@
 from flask import jsonify, request
+
 from models import Usuario
+
 
 def usuario_get_list():
     query = Usuario.select()

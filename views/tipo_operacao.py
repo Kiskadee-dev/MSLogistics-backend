@@ -1,6 +1,7 @@
 from flask import jsonify, request
-from models import TipoOperacao, Usuario
 from playhouse.shortcuts import model_to_dict
+
+from models import TipoOperacao, Usuario
 
 
 def tipos_get_list():

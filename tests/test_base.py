@@ -1,9 +1,11 @@
-import main
-from models import *
-from database import Database
-import pytest
-from manage import dados_de_teste
 import json
+
+import pytest
+
+import main
+from database import Database
+from manage import dados_de_teste
+from models import *
 
 MODELS = [Usuario, Mercadoria, Fabricante, TipoMercadoria, TipoOperacao]
 db = Database.get(testing=True)

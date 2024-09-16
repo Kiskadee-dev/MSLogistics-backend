@@ -1,7 +1,8 @@
 from flask import jsonify, request
-from models import TipoMercadoria, Usuario
 from playhouse.shortcuts import model_to_dict
-from responses import Responses, Messages
+
+from models import TipoMercadoria, Usuario
+from responses import Messages, Responses
 
 
 def tipos_mercadoria_get_list():

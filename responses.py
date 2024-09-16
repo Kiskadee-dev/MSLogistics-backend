@@ -1,6 +1,7 @@
-from typing import Tuple, Any
-from flask import jsonify
 from enum import Enum
+from typing import Any, Tuple
+
+from flask import jsonify
 
 
 class Messages(Enum):

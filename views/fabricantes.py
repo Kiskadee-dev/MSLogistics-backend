@@ -1,9 +1,11 @@
-from models import Fabricante, Usuario
-from flask import jsonify, request
-from database import Database
-from playhouse.shortcuts import model_to_dict
-from peewee import DoesNotExist
 from datetime import datetime
+
+from flask import jsonify, request
+from peewee import DoesNotExist
+from playhouse.shortcuts import model_to_dict
+
+from database import Database
+from models import Fabricante, Usuario
 
 
 def fabricante_get_list():

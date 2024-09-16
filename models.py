@@ -1,16 +1,17 @@
+from datetime import datetime
+
+import bcrypt
 from peewee import (
-    Model,
     CharField,
-    TextField,
-    IntegerField,
+    Check,
     DateTimeField,
     ForeignKeyField,
-    Check,
+    IntegerField,
+    Model,
+    TextField,
 )
+
 from database import Database
-from datetime import datetime
-import bcrypt
-from enum import Enum
 
 
 class BaseModel(Model):
