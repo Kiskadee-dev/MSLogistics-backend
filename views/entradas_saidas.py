@@ -32,7 +32,7 @@ def entradas_e_saidas_create():
 
 def entradas_e_saidas_read():
     form = request.form
-    id = form.get("id")
+    id = request.id
     if not id:
         return Responses.bad_request(Messages.no_id)
     entradas_e_saidas = EntradaESaida.get(EntradaESaida.id == id)
@@ -42,7 +42,7 @@ def entradas_e_saidas_read():
 def entradas_e_saidas_update():
     form = request.form
 
-    id = form.get("id")  # ID of the entry to update
+    id = request.id  # ID of the entry to update
 
     if not id:
         return Responses.bad_request(Messages.no_id)
@@ -82,7 +82,7 @@ def entradas_e_saidas_update():
 
 def entradas_e_saidas_delete():
     form = request.form
-    id = form.get("id")
+    id = request.id
     try:
         entrada_e_saida = EntradaESaida.get(EntradaESaida.id == id)
         entrada_e_saida.delete()

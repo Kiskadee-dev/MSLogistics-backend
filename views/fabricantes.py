@@ -34,17 +34,15 @@ def fabricante_create():
         fab.save()
 
 
-def fabricante_read():
-    id = request.form.get("id")
+def fabricante_read(id: int):
     if not id:
         return jsonify({"msg": "No id provided"}), 400
     fab = Fabricante.get_or_none(Fabricante.id == id)
     return jsonify(model_to_dict(fab, exclude=[Usuario.senha]))
 
 
-def fabricante_update():
+def fabricante_update(id: int):
     form = request.form
-    id = form.get("id")
     nome = form.get("nome")
     descricao = form.get("descricao")
     criado_em = form.get("criado_em")
@@ -78,8 +76,8 @@ def fabricante_update():
     else:
         return jsonify({"msg": "No fields to update"}), 400
 
-def fabricante_delete():
-    id = request.form.get('id')
+
+def fabricante_delete(id: int):
     if not id:
         return jsonify({"msg": "No id provided"}), 400
     try:

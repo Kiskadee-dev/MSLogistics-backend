@@ -48,7 +48,6 @@ def test_mercadoria_presente():
 
 
 ## Pelo tempo não será possível fazer TDD..
-# TODO: Testar as views...
 # Usuário
 def test_usuario(client):
     response = client.get("/usuario/")
@@ -77,6 +76,11 @@ def test_fabricantes_read(client):
     assert response.status_code == 200
 
 
+# TODO: Create
+# TODO: Update
+# TODO: Delete
+
+
 # Tipos de operações, precisa haver endpoint R
 def test_tipos_operacoes_list(client):
     response = client.get("/operacao/tipos/")
@@ -90,7 +94,29 @@ def test_entrada_saida_list(client):
 
 
 def test_entrada_saida_read(client):
+    # TODO: Implement
     pytest.skip("Not implemented.")
 
     response = client.get("/operacao/1")
     assert response.status_code == 200
+
+
+# TODO: Create
+# TODO: Update
+# TODO: Delete
+
+
+# Mercadorias
+def test_mercadoria_list(client):
+    response = client.get("/mercadoria/")
+    assert response.status_code == 200
+
+
+def test_mercadoria_read(client):
+    response = client.get("/mercadoria/1")
+    assert response.status_code == 200
+
+
+# TODO: Create
+# TODO: Update
+# TODO: Delete

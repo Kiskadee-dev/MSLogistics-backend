@@ -35,19 +35,19 @@ def mercadoria_create():
     return Responses.created()
 
 
-def mercadoria_read():
+def mercadoria_read(id:int):
     """Gets info about Mercadoria
 
     Parameters
     ----------
-
+    id
+        Id of object
     Returns
     -------
     Dict
         Returns the info about the object
     """
     form = request.form
-    id = form.get("id")
     try:
         query = Mercadoria.get(Mercadoria.id == id)
     except DoesNotExist:
@@ -55,12 +55,13 @@ def mercadoria_read():
     return jsonify(model_to_dict(query, exclude=[Usuario.senha]))
 
 
-def mercadoria_update():
+def mercadoria_update(id:int):
     """Updates Mercadoria object
 
     Parameters
     ----------
-    None
+    id
+        Id of object
 
     Returns
     -------
@@ -69,14 +70,13 @@ def mercadoria_update():
     """
 
     form = request.form
-    mercadoria_id = form.get("id")  # Assuming 'id' is passed to identify the object
 
-    if not mercadoria_id:
+    if not id:
         return Responses.bad_request(Messages.no_id)
 
     # Try to get the Mercadoria object by ID
     try:
-        mercadoria = Mercadoria.get(Mercadoria.id == mercadoria_id)
+        mercadoria = Mercadoria.get(Mercadoria.id == id)
     except DoesNotExist:
         return Responses.not_found()
 
@@ -101,24 +101,24 @@ def mercadoria_update():
 
     # Perform the update if there are fields to update
     if update_data:
-        Mercadoria.update(**update_data).where(Mercadoria.id == mercadoria_id).execute()
+        Mercadoria.update(**update_data).where(Mercadoria.id == id).execute()
         return Responses.ok()
     else:
         return Responses.bad_request(Messages.no_fields_to_update)
 
 
-def mercadoria_delete():
+def mercadoria_delete(id:int):
     """Deletes an object
 
     Parameters
     ----------
-    
+
     Returns
     -------
     200 Ok or 404.
     """
     form = request.form
-    id = form.get("id")
+    id = request.id
     if not id:
         return Responses.bad_request(Messages.no_id)
     mercadoria = Mercadoria.get(Mercadoria.id == id)
