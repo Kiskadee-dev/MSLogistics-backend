@@ -21,9 +21,9 @@ def create_tables():
         )
 
 
-def dados_de_teste():
+def dados_de_teste(testing=False):
     load_dotenv()
-    Database.get().connect()
+    Database.get(testing=testing).connect()
     try:
         adm_name = getenv("ADMIN_USER", "Admin")
         user_exists = (

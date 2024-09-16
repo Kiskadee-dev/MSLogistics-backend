@@ -14,23 +14,19 @@ load_dotenv()
 
 app = Flask(__name__)
 
-
 @app.before_request
 def before_request():
     Database.get().connect()
-
 
 @app.after_request
 def after_request(response):
     Database.get().close()
     return response
 
-
 @app.errorhandler(IntegrityError)
 def handle_bad_request(e):
     app.logger.error(e)
     return jsonify({"msg": "Bad request", "error": f"{str(e)}"}), 400
-
 
 app.add_url_rule("/", view_func=generic.index)
 
@@ -43,10 +39,14 @@ app.add_url_rule(
     "/mercadoria/<int:pk>", view_func=mercadoria.mercadoria_read, methods=["GET"]
 )
 app.add_url_rule(
-    "/mercadoria/<int:pk>", view_func=mercadoria.mercadoria_update, methods=["PATCH"]
+    "/mercadoria/<int:pk>",
+    view_func=mercadoria.mercadoria_update,
+    methods=["PATCH"],
 )
 app.add_url_rule(
-    "/mercadoria/<int:pk>", view_func=mercadoria.mercadoria_delete, methods=["DELETE"]
+    "/mercadoria/<int:pk>",
+    view_func=mercadoria.mercadoria_delete,
+    methods=["DELETE"],
 )
 
 # Usuario, não há funcionalidade para registro de novos, R
@@ -58,7 +58,9 @@ app.add_url_rule(
 )
 
 # Tipos de operações, R
-app.add_url_rule("/operacao/tipos/", view_func=tipos.tipos_get_list, methods=["GET"])
+app.add_url_rule(
+    "/operacao/tipos/", view_func=tipos.tipos_get_list, methods=["GET"]
+)
 
 # Entradas e saídas, CRUD
 app.add_url_rule(
@@ -66,6 +68,7 @@ app.add_url_rule(
     view_func=entradas_e_saidas.entradas_e_saidas_get_list,
     methods=["GET"],
 )
+
 
 if __name__ == "__main__":
     app.run(debug=getenv("debug") is not None)
