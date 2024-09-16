@@ -42,8 +42,10 @@ def runner(app):
 def test_usuario_presente():
     assert len(Usuario.select()) > 0, "Usuário foi inserido com sucesso"
 
+
 def test_mercadoria_presente():
     assert len(Mercadoria.select()) > 0, "Existem mercadorias"
+
 
 # Testar as views...
 # Usuário
@@ -51,3 +53,12 @@ def test_usuario(client):
     response = client.get("/usuario/")
     data = json.loads(response.data)
     assert len(data) > 0, "Has data"
+    assert data[0]["nome"] == "Admin", "Usuário 0 é o admin"
+
+
+def test_tipos_operacoes(client):
+    response = client.get("/operacao/tipos/")
+    data = json.loads(response.data)
+    assert len(data) > 1
+    assert data[0]["nome"] == "entrada"
+    assert data[1]["nome"] == "saída"

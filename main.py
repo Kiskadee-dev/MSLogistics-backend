@@ -6,7 +6,8 @@ import views.usuario as usuario
 import views.generic as generic
 import views.entradas_saidas as entradas_e_saidas
 import views.fabricantes as fabricantes
-import views.tipos as tipos
+import views.tipos_mercadoria as tipos_mercadoria
+import views.operacao as operacao
 from database import Database
 from peewee import IntegrityError
 
@@ -14,19 +15,23 @@ load_dotenv()
 
 app = Flask(__name__)
 
+
 @app.before_request
 def before_request():
-    Database.get().connect()
+    Database.get().connect(reuse_if_open=True)
+
 
 @app.after_request
 def after_request(response):
     Database.get().close()
     return response
 
+
 @app.errorhandler(IntegrityError)
 def handle_bad_request(e):
     app.logger.error(e)
     return jsonify({"msg": "Bad request", "error": f"{str(e)}"}), 400
+
 
 app.add_url_rule("/", view_func=generic.index)
 
@@ -58,15 +63,18 @@ app.add_url_rule(
 )
 
 # Tipos de operações, R
-app.add_url_rule(
-    "/operacao/tipos/", view_func=tipos.tipos_get_list, methods=["GET"]
-)
+app.add_url_rule("/operacao/tipos/", view_func=operacao.tipos_get_list, methods=["GET"])
 
 # Entradas e saídas, CRUD
 app.add_url_rule(
     "/operacao/",
     view_func=entradas_e_saidas.entradas_e_saidas_get_list,
     methods=["GET"],
+)
+
+# Tipos de mercadorias, CRUD
+app.add_url_rule(
+    "/mercadoria/tipos/", view_func=tipos_mercadoria.tipos_mercadoria_get_list
 )
 
 

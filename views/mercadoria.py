@@ -47,7 +47,7 @@ def mercadoria_read(pk: int):
     query = Mercadoria.get_or_none(Mercadoria.id == pk)
     if query is None:
         return jsonify({"msg": "not found"}), 404
-    return jsonify(deserialize_mercadoria(model_to_dict(query)))
+    return jsonify(model_to_dict(query, exclude=[Usuario.senha]))
 
 
 def mercadoria_update():

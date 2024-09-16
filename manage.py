@@ -75,7 +75,7 @@ def dados_de_teste(testing=False):
         )
         if not ops_saida_exists:
             models.Operacao(
-                nome="saida",
+                nome="saída",
                 descricao="""Produtos que saíram do armazém""",
                 criado_por=admin,
             ).save()
