@@ -11,7 +11,7 @@ class Messages(Enum):
     created = "Created."
     no_fields_to_update = "No fields to update."
     deleted = "Deleted."
-    invalid_date = "Invalid date format"
+    invalid_date = "Invalid date format."
 
 
 class Responses:
