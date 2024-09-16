@@ -62,7 +62,7 @@ class Mercadoria(BaseModel):
     criado_por = ForeignKeyField(Usuario, backref="mercadorias_usuario")
 
 
-class Operacao(BaseModel):
+class TipoOperacao(BaseModel):
     nome = CharField(max_length=10, unique=True)
     descricao = TextField()
     criado_em = DateTimeField(default=datetime.now)
@@ -72,7 +72,7 @@ class Operacao(BaseModel):
 class EntradaESaida(BaseModel):
     mercadoria = ForeignKeyField(Mercadoria, backref="entrada_saida_mercadoria")
     quantia = IntegerField(Check("quantia > 0"))
-    tipo_operacao = ForeignKeyField(Operacao, backref="entrada_saida_operacao")
+    tipo_operacao = ForeignKeyField(TipoOperacao, backref="entrada_saida_operacao")
     data_e_hora = DateTimeField()
     local = CharField(max_length=256)
     criado_em = DateTimeField(default=datetime.now)

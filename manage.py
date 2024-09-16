@@ -14,7 +14,7 @@ def create_tables():
                 models.Usuario,
                 models.Fabricante,
                 models.TipoMercadoria,
-                models.Operacao,
+                models.TipoOperacao,
                 models.Mercadoria,
                 models.EntradaESaida,
             ]
@@ -61,20 +61,20 @@ def dados_de_teste(testing=False):
         # Cria tipos de operações de entrada e saída
 
         ops_entrada_exists = (
-            len(models.Operacao.select().where(models.Operacao.nome == "entrada")) == 1
+            len(models.TipoOperacao.select().where(models.TipoOperacao.nome == "entrada")) == 1
         )
         if not ops_entrada_exists:
-            models.Operacao(
+            models.TipoOperacao(
                 nome="entrada",
                 descricao="""Produtos que entraram no armazém""",
                 criado_por=admin,
             ).save()
 
         ops_saida_exists = (
-            len(models.Operacao.select().where(models.Operacao.nome == "saida")) == 1
+            len(models.TipoOperacao.select().where(models.TipoOperacao.nome == "saida")) == 1
         )
         if not ops_saida_exists:
-            models.Operacao(
+            models.TipoOperacao(
                 nome="saída",
                 descricao="""Produtos que saíram do armazém""",
                 criado_por=admin,

@@ -5,7 +5,7 @@ import pytest
 from manage import dados_de_teste
 import json
 
-MODELS = [Usuario, Mercadoria, Fabricante, TipoMercadoria, Operacao]
+MODELS = [Usuario, Mercadoria, Fabricante, TipoMercadoria, TipoOperacao]
 db = Database.get(testing=True)
 
 
@@ -47,12 +47,13 @@ def test_mercadoria_presente():
     assert len(Mercadoria.select()) > 0, "Existem mercadorias"
 
 
-# Testar as views...
+## Pelo tempo não será possível fazer TDD..
+# TODO: Testar as views...
 # Usuário
 def test_usuario(client):
     response = client.get("/usuario/")
     data = json.loads(response.data)
-    assert len(data) > 0, "Has data"
+    assert len(data) > 0, "Possui dados"
     assert data[0]["nome"] == "Admin", "Usuário 0 é o admin"
 
 

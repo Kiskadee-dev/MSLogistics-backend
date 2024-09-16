@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from models import Operacao, Usuario
+from models import TipoOperacao, Usuario
 from playhouse.shortcuts import model_to_dict
 
 
@@ -9,6 +9,6 @@ def tipos_get_list():
     return jsonify(
         [
             model_to_dict(query, exclude=[Usuario.senha])
-            for query in Operacao.select()
+            for query in TipoOperacao.select()
         ]
     )
