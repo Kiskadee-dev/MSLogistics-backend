@@ -6,11 +6,12 @@ from responses import Messages, Responses
 
 
 def tipos_mercadoria_get_list():
-    tipos = [
-        model_to_dict(query, exclude=[Usuario.senha])
-        for query in TipoMercadoria.select()
-    ]
-    return jsonify({tipos})
+    return jsonify(
+        [
+            model_to_dict(query, exclude=[Usuario.senha])
+            for query in TipoMercadoria.select()
+        ]
+    )
 
 
 def tipos_mercadoria_create():
