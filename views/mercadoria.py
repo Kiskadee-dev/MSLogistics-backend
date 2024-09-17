@@ -118,10 +118,8 @@ def mercadoria_delete(id: int):
     -------
     200 Ok or 404.
     """
-    form = request.form
-    id = request.id
     if not id:
         return Responses.bad_request(Messages.no_id)
     mercadoria = Mercadoria.get(Mercadoria.id == id)
-    mercadoria.delete()
+    mercadoria.delete_instance()
     return Responses.ok(Messages.deleted)
