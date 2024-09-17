@@ -3,6 +3,7 @@ from playhouse.shortcuts import model_to_dict
 
 from models import TipoMercadoria, Usuario
 from responses import Messages, Responses
+from peewee import DoesNotExist
 
 
 def tipos_mercadoria_get_list():
@@ -46,8 +47,11 @@ def tipos_mercadoria_update():
     return Responses.bad_request(Messages.no_fields_to_update)
 
 
-def tipos_mercadoria_delete():
-    form = request.form
-    id = form.get("id")
+def tipos_mercadoria_delete(id: int):
     if not id:
         return Responses.bad_request(Messages.no_id)
+    try:
+        tm = TipoMercadoria.get(TipoMercadoria.id == id)
+        tm.delete_instance()
+    except DoesNotExist:
+        return Responses.not_found()

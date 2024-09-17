@@ -82,9 +82,7 @@ def entradas_e_saidas_update():
         return Responses.bad_request(Messages.no_fields_to_update)
 
 
-def entradas_e_saidas_delete():
-    form = request.form
-    id = request.id
+def entradas_e_saidas_delete(id:int):
     try:
         entrada_e_saida = EntradaESaida.get(EntradaESaida.id == id)
         entrada_e_saida.delete_instance()

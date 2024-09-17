@@ -107,7 +107,7 @@ app.add_url_rule(
 app.add_url_rule(
     "/operacao/<int:id>",
     view_func=entradas_e_saidas.entradas_e_saidas_delete,
-    methods=["POST"],
+    methods=["DELETE"],
 )
 
 # Tipos de mercadorias, CRUD
