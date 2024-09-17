@@ -12,10 +12,12 @@ import views.tipo_operacao as tipo_operacao
 import views.tipos_mercadoria as tipos_mercadoria
 import views.usuario as usuario
 from database import Database
+from flask_cors import CORS, cross_origin
 
 load_dotenv()
 
 app = Flask(__name__)
+cors = CORS(app)
 
 
 @app.before_request
@@ -27,12 +29,6 @@ def before_request():
 def after_request(response):
     Database.get().close()
     return response
-
-
-@app.teardown_request
-def _db_close(exc):
-    if not Database.get().is_closed():
-        Database.get().close()
 
 
 @app.errorhandler(IntegrityError)
