@@ -12,7 +12,7 @@ def entradas_e_saidas_get_list():
     "Retorna lista de entradas e saídas"
     return jsonify(
         [
-            model_to_dict(query, exclude=Usuario.senha)
+            model_to_dict(query, exclude=[Usuario.senha])
             for query in EntradaESaida.select()
         ]
     )
@@ -87,7 +87,7 @@ def entradas_e_saidas_delete():
     id = request.id
     try:
         entrada_e_saida = EntradaESaida.get(EntradaESaida.id == id)
-        entrada_e_saida.delete()
+        entrada_e_saida.delete_instance()
         return Responses.ok(Messages.deleted)
     except DoesNotExist:
         return Responses.not_found(Messages.record_not_found)

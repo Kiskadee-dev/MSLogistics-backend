@@ -84,6 +84,6 @@ def fabricante_delete(id: int):
         return jsonify({"msg": "No id provided"}), 400
     try:
         fab = Fabricante.get(Fabricante.id == id)
-        fab.delete()
+        fab.delete_instance()
     except DoesNotExist:
         return jsonify({"msg": "Fabricante not found"}), 404

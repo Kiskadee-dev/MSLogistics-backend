@@ -24,4 +24,4 @@ COPY . ./app
 EXPOSE 5000
 #ENTRYPOINT ["python", "-u", "app/main.py"]
 WORKDIR /app/
-ENTRYPOINT ["gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "main:app"]
+CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "main:app"]

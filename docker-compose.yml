@@ -2,15 +2,33 @@ services:
   db:
     image: mariadb:11.6.1-ubi-rc
     env_file:
-    - .env
+      - .env
     expose:
-    - 3000
+      - 3000
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  setup:
+    build: .
+    command: python -u manage.py
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
 
   backend:
     build: .
     ports:
-    - 5000:5000
+      - 5000:5000
     env_file:
-    - .env
+      - .env
     depends_on:
-    - db
+      setup:
+        condition: service_completed_successfully
+      db:
+        condition: service_healthy

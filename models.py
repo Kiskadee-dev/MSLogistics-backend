@@ -45,7 +45,7 @@ class Fabricante(BaseModel):
     descricao = TextField()
     criado_em = DateTimeField(default=datetime.now)
     criado_por = ForeignKeyField(
-        Usuario, backref="fabricantes_usuario", on_delete=["CASCADE"]
+        Usuario, backref="fabricantes_usuario", on_delete="CASCADE"
     )
 
 
@@ -53,7 +53,7 @@ class TipoMercadoria(BaseModel):
     nome = CharField(max_length=256, unique=True)
     criado_em = DateTimeField(default=datetime.now)
     criado_por = ForeignKeyField(
-        Usuario, backref="tipos_mercadoria_usuario", on_delete=["CASCADE"]
+        Usuario, backref="tipos_mercadoria_usuario", on_delete="CASCADE"
     )
 
 
@@ -61,15 +61,15 @@ class Mercadoria(BaseModel):
     nome = CharField(max_length=256)
     numero_registro = IntegerField(unique=True, null=None)
     fabricante = ForeignKeyField(
-        Fabricante, backref="mercadorias_fabricante", on_delete=["CASCADE"]
+        Fabricante, backref="mercadorias_fabricante", on_delete="CASCADE"
     )
     tipo = ForeignKeyField(
-        TipoMercadoria, backref="mercadorias_tipo", on_delete=["CASCADE"]
+        TipoMercadoria, backref="mercadorias_tipo", on_delete="CASCADE"
     )
     descricao = TextField()
     criado_em = DateTimeField(default=datetime.now)
     criado_por = ForeignKeyField(
-        Usuario, backref="mercadorias_usuario", on_delete=["CASCADE"]
+        Usuario, backref="mercadorias_usuario", on_delete="CASCADE"
     )
 
 
@@ -78,23 +78,23 @@ class TipoOperacao(BaseModel):
     descricao = TextField()
     criado_em = DateTimeField(default=datetime.now)
     criado_por = ForeignKeyField(
-        Usuario, backref="operacao_usuario", on_delete=["CASCADE"]
+        Usuario, backref="operacao_usuario", on_delete="CASCADE"
     )
 
 
 class EntradaESaida(BaseModel):
     mercadoria = ForeignKeyField(
-        Mercadoria, backref="entrada_saida_mercadoria", on_delete=["CASCADE"]
+        Mercadoria, backref="entrada_saida_mercadoria", on_delete="CASCADE"
     )
     quantia = IntegerField(Check("quantia > 0"))
     tipo_operacao = ForeignKeyField(
-        TipoOperacao, backref="entrada_saida_operacao", on_delete=["CASCADE"]
+        TipoOperacao, backref="entrada_saida_operacao", on_delete="CASCADE"
     )
     data_e_hora = DateTimeField()
     local = CharField(max_length=256)
     criado_em = DateTimeField(default=datetime.now)
     criado_por = ForeignKeyField(
-        Usuario, backref="entrada_saida_usuario", on_delete=["CASCADE"]
+        Usuario, backref="entrada_saida_usuario", on_delete="CASCADE"
     )
 
     def __str__(self):
